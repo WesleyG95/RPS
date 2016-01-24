@@ -5,15 +5,14 @@ var userChoice; //stores the users choice(rock, paper, scissors, lizard, or spoc
 var result; //stores the winner(rock, paper, scissors, lizard, or spock) or if there is a tie it stores "tie"
 var allResults = document.getElementById("results"); //stores the results that the user sees
 
-//get the computers choice and the users choice
+//get the users choice and the computers choice
 var getInput = function()
 {
 	//get user input
 	userChoice = document.getElementById("userChoice").value;
 	userChoice = userChoice.toLowerCase();
-	console.log(userChoice);
 	
-	//if user has good input, calculate computer choice
+	//if the user entered a valid answer, calculate computer choice
 	if((userChoice == "rock") || (userChoice == "paper") || (userChoice == "scissors") || (userChoice == "lizard") || (userChoice == "spock"))
 	{
 		computerChoice = Math.random();
@@ -39,7 +38,10 @@ var getInput = function()
 			computerChoice = "spock";
 		}
 	}
-	
+	else
+	{
+		result = "bad input";
+	}
 }
 
 //compare computers choice to users choice and see who won
@@ -146,26 +148,36 @@ var compare = function()
 	}
 }
 
+//writes the results to the paragraph tag with the id of results
 var printResults = function()
 {
-	allResults.innerHTML += "The computer chose: " + computerChoice + "</br>";
-	console.log(allResults.innerHTML);
+	//if the user didn't enter a valid answer
+	if (result == "bad input")
+	{
+		allResults.innerHTML += "Please enter a valid answer and try again." + "</br></br>";
+	}
 	
-	if (result == "tie") 
-	{
-		allResults.innerHTML += "The game was a tie. Lets play again!";
-	}
-	else if (result == userChoice)
-	{
-		allResults.innerHTML += "You won!" + "</br></br>";
-	}
-	else if (result == computerChoice)
-	{
-		allResults.innerHTML += "The computer won!" + "</br></br>";
-	}
+	//if the user did enter a valid answer
 	else
 	{
-		allResults.innerHTML += "There was an error. Please try again" + "</br></br>";
+		allResults.innerHTML += "The computer chose: " + computerChoice + "</br>";
+		
+		if (result == "tie") 
+		{
+			allResults.innerHTML += "The game was a tie. Lets play again!";
+		}
+		else if (result == userChoice)
+		{
+			allResults.innerHTML += "You won!" + "</br></br>";
+		}
+		else if (result == computerChoice)
+		{
+			allResults.innerHTML += "The computer won!" + "</br></br>";
+		}
+		else
+		{
+			allResults.innerHTML += "There was an error. Please try again" + "</br></br>";
+		}
 	}
 }
 
@@ -175,8 +187,12 @@ var startGame = function()
 	//get input
 	getInput();
 	
-	//compare results to see who won
-	result = compare();
+	//if the user input is valid, see who won
+	if (result != "bad input")
+	{
+		result = compare();
+		console.log("comparing results");
+	}
 	
 	//show the results to the user
 	printResults();
