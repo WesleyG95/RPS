@@ -1,172 +1,183 @@
-//Name: Wesley Gill
-//Estimated time: 2 hours
-//Percent Completed: 100%
+//created by: Wesley Gill
 
 var computerChoice; //stores the computer choice(rock, paper, scissors, lizard, or spock)
 var userChoice; //stores the users choice(rock, paper, scissors, lizard, or spock)
 var result; //stores the winner(rock, paper, scissors, lizard, or spock) or if there is a tie it stores "tie"
+var allResults = document.getElementById("results"); //stores the results that the user sees
 
 //get the computers choice and the users choice
 var getInput = function()
 {
-	userChoice = prompt("Do you choose rock, paper, scissors, lizard, or spock??");
-	computerChoice = Math.random();
+	//get user input
+	userChoice = document.getElementById("userChoice").value;
+	userChoice = userChoice.toLowerCase();
+	console.log(userChoice);
 	
-	while((userChoice != "rock") && (userChoice != "paper") && (userChoice != "scissors") && (userChoice != "lizard") && (userChoice != "spock"))
+	//if user has good input, calculate computer choice
+	if((userChoice == "rock") || (userChoice == "paper") || (userChoice == "scissors") || (userChoice == "lizard") || (userChoice == "spock"))
 	{
-		userChoice = prompt("That answer wasn't valid. Please enter another answer. Do you choose rock, paper, scissors, lizard, or spock?");
+		computerChoice = Math.random();
+	
+		if (computerChoice <= 0.2) 
+		{
+			computerChoice = "rock";
+		} 
+		else if (computerChoice <= 0.4) 
+		{
+			computerChoice = "paper";
+		} 
+		else if (computerChoice <= 0.6) 
+		{
+			computerChoice = "scissors";
+		} 
+		else if (computerChoice <= 0.8) 
+		{
+			computerChoice = "lizard";
+		} 
+		else 
+		{
+			computerChoice = "spock";
+		}
 	}
 	
-	if (computerChoice <= 0.2) 
-	{
-		computerChoice = "rock";
-	} 
-	else if (computerChoice <= 0.4) 
-	{
-		computerChoice = "paper";
-	} 
-	else if (computerChoice <= 0.6) 
-	{
-		computerChoice = "scissors";
-	} 
-	else if (computerChoice <= 0.8) 
-	{
-		computerChoice = "lizard";
-	} 
-	else 
-	{
-		computerChoice = "spock";
-	} 
-	
-	document.write("The computer chose: " + computerChoice + "</br>");
-	console.log("Computer: " + computerChoice);
 }
 
 //compare computers choice to users choice and see who won
-var compare = function(choice1, choice2) 
+var compare = function() 
 {
-	if (choice1 === choice2)
+	if (userChoice == computerChoice)
 	{
 		return "tie"; 
 	}
-	else if (choice1 === "rock")
+	else if (userChoice == "rock")
 	{
-		if (choice2 === "paper")
+		if (computerChoice == "paper")
 		{
 			return "paper";   
 		}
-		else if (choice2 === "scissors")
+		else if (computerChoice == "scissors")
 		{
 			return "rock";   
 		}
-		else if (choice2 === "lizard")
+		else if (computerChoice == "lizard")
 		{
 			return "rock";
 		}
-		else if (choice2 === "spock")
+		else if (computerChoice == "spock")
 		{
 			return "spock";
 		}
 	} 
-	else if (choice1 === "paper")
+	else if (userChoice == "paper")
 	{
-		if (choice2 === "rock")
+		if (computerChoice == "rock")
 		{
 			return "paper";   
 		}
-		else if (choice2 === "scissors")
+		else if (computerChoice == "scissors")
 		{
 			return "scissors";   
 		}
-		else if (choice2 === "lizard")
+		else if (computerChoice == "lizard")
 		{
 			return "lizard";
 		}
-		else if (choice2 === "spock")
+		else if (computerChoice == "spock")
 		{
 			return "paper";
 		}
 	}
-	else if (choice1 === "scissors")
+	else if (userChoice == "scissors")
 	{
-		if (choice2 === "rock")
+		if (computerChoice == "rock")
 		{
 			return "rock";   
 		}
-		else if (choice2 === "paper")
+		else if (computerChoice == "paper")
 		{
 			return "scissors";   
 		}
-		else if (choice2 === "lizard")
+		else if (computerChoice == "lizard")
 		{
 			return "scissors";
 		}
-		else if (choice2 === "spock")
+		else if (computerChoice == "spock")
 		{
 			return "spock";
 		}
 	}
-	else if (choice1 === "lizard")
+	else if (userChoice == "lizard")
 	{
-		if (choice2 === "rock")
+		if (computerChoice == "rock")
 		{
 			return "rock";   
 		}
-		else if (choice2 === "paper")
+		else if (computerChoice == "paper")
 		{
 			return "lizard";   
 		}
-		else if (choice2 === "scissors")
+		else if (computerChoice == "scissors")
 		{
 			return "scissors";
 		}
-		else if (choice2 === "spock")
+		else if (computerChoice == "spock")
 		{
 			return "lizard";
 		}
 	}
-	else if (choice1 === "spock") 
+	else if (userChoice == "spock") 
 	{
-		if (choice2 === "rock")
+		if (computerChoice == "rock")
 		{
 			return "spock";   
 		}
-		else if (choice2 === "paper")
+		else if (computerChoice == "paper")
 		{
 			return "paper";
 		}
-		else if (choice2 === "scissors")
+		else if (computerChoice == "scissors")
 		{
 			return "spock";
 		}
-		else if (choice2 === "lizard")
+		else if (computerChoice == "lizard")
 		{
 			return "lizard";
 		}
+	}
+}
+
+var printResults = function()
+{
+	allResults.innerHTML += "The computer chose: " + computerChoice + "</br>";
+	console.log(allResults.innerHTML);
+	
+	if (result == "tie") 
+	{
+		allResults.innerHTML += "The game was a tie. Lets play again!";
+	}
+	else if (result == userChoice)
+	{
+		allResults.innerHTML += "You won!" + "</br></br>";
+	}
+	else if (result == computerChoice)
+	{
+		allResults.innerHTML += "The computer won!" + "</br></br>";
+	}
+	else
+	{
+		allResults.innerHTML += "There was an error. Please try again" + "</br></br>";
 	}
 }
 
 //start the game
-do
+var startGame = function() 
 {
+	//get input
 	getInput();
-	result = compare(userChoice, computerChoice);
-	if (result === "tie") 
-	{
-		alert("The game was a tie. Lets play again!");
-	}
-} while (result === "tie"); //if there is a tie, play again
-
-//tell the user if they won or lost
-if (result === userChoice)
-{
-	document.write("You won!");
-}
-else if (result === computerChoice)
-{
-	document.write("The computer won!");
-}
-else
-{
-	document.write("There was an error. Please try again.");
+	
+	//compare results to see who won
+	result = compare();
+	
+	//show the results to the user
+	printResults();
 }
